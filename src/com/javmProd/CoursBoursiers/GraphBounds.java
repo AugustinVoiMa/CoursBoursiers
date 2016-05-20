@@ -14,8 +14,8 @@ public class GraphBounds {
 	public final static Integer EXTREMUMS__GWIDTH = 2;
 	
 	public GraphBounds(HistoriqueCoursAction cours,JPanel feuille){
-		this.candelHeight = 11.;
-		this.candelWidth = 10.;		
+		this.candelHeight = 6.;
+		this.candelWidth = 6.;		
 		
 		this.xmin=cours.getFirstVal().getDate();
 		this.xmax=cours.getLastVal().getDate();
@@ -34,7 +34,9 @@ public class GraphBounds {
 		//this.candelHeight = ((double)heighT)/(this.height);
 		
 		this.nbCandels=(int)(cours.size()+2);
-		feuille.setPreferredSize(new Dimension((int)(this.nbCandels*this.candelWidth),(int)(this.height*this.candelHeight)));
+		
+		
+		feuille.setPreferredSize(new Dimension((int)(this.nbCandels*this.candelWidth*2),(int)(this.height*this.candelHeight)));
 	}
 	
 	public double getCandelWidth(){
@@ -47,12 +49,11 @@ public class GraphBounds {
 	public double calcY(Double y) throws OutOfGraphException{
 		//Renvoie la coordonnée en Y de la chandelle
 		
-		Double res = (y-this.ymin) * this.candelHeight;
+		Double res = (this.height-(y-this.ymin)) * this.candelHeight;
 		
 		if (res < -(this.candelHeight/2.) || res > this.height*this.candelHeight){
 			throw new OutOfGraphException("y: "+res+" is not in [ "+ymin+" ; "+ymax+" ]");
 		}
-		//System.out.println("calcY = "+res);
 		return res;
 	}
 	

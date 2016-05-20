@@ -3,54 +3,69 @@ package com.javmProd.CoursBoursiers;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+
+import javax.swing.BoundedRangeModel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
 
-public class Graphe extends JFrame {
+public class Graphe extends JScrollPane {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private JPanel feuille;
+	private JPanel panelGraph;
+	private JScrollPane panelGeneral;
+	private GraphBounds gbounds;
 
-	public Graphe(HistoriqueCoursAction symbol){
-		super("Cours de "+symbol.getSymbol());
-		super.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		super.setSize(new Dimension(900, 500));
-
-		
-		
-		JPanel feuille = new JPanel(null);
+	public Graphe(HistoriqueCoursAction symbol){		
+		super();
+		feuille = new JPanel(null);
 		feuille.setBackground(Color.white);
 		
-		JPanel panelGraph = new JPanel(new BorderLayout());
-		panelGraph.add(feuille,BorderLayout.CENTER);
-		//panelGraph.add(new AxisRule(AxisRule.HORIZONTAL), BorderLayout.SOUTH);
 		
-		JScrollPane panelGeneral= new JScrollPane();
+		
+		panelGraph = new JPanel(new BorderLayout());
+		panelGraph.add(feuille,BorderLayout.CENTER);
+		
+		panelGeneral= this;
 		panelGeneral.setViewportView(panelGraph);
 		panelGeneral.setViewportBorder(new LineBorder(Color.BLACK));
+		
 		panelGeneral.setHorizontalScrollBar(panelGeneral.createHorizontalScrollBar());
 		panelGeneral.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		
+		panelGeneral.getHorizontalScrollBar().setMinimum(0);
+		panelGeneral.getHorizontalScrollBar().setMaximum(feuille.getWidth());
+		panelGeneral.getHorizontalScrollBar().setValue(feuille.getWidth());
+		
+		
 		panelGeneral.setVerticalScrollBar(panelGeneral.createVerticalScrollBar());
 		panelGeneral.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		
 		panelGeneral.setBackground(Color.black);
 		
 		
-		GraphBounds gbounds = new GraphBounds(symbol,feuille);
-		
+		gbounds = new GraphBounds(symbol,panelGraph);
+		MouseListGraph mml = new MouseListGraph(feuille);
+		panelGeneral.getViewport().addMouseMotionListener(mml);
+		panelGeneral.getViewport().addMouseListener(mml);
 		Chandelle ch = null;
-		System.out.println(symbol.size()+" loops");
+
 		int i = 1;
+		
 		for(Value v : symbol){
 			try{
 				ch= v.toChandelle();
 				
 				feuille.add(ch);
 				
-				int x = (int)(i++*(gbounds.getCandelWidth()+2));
-				int y = (int)gbounds.calcY(v.getHigh());
+				int x = (int)(i++*2*(gbounds.getCandelWidth()));
+				int y = (int)(gbounds.calcY(v.getHigh()));
 								
 				ch.setBounds(gbounds,x,y);
 				ch.repaint();
@@ -59,9 +74,6 @@ public class Graphe extends JFrame {
 				e.printStackTrace();
 			}
 		}
-		this.getContentPane().add(panelGeneral);
-		panelGeneral.setMinimumSize(panelGeneral.getParent().getSize());
-		//super.pack();
-		this.setVisible(true);
 	}
+
 }
