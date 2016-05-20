@@ -15,7 +15,9 @@ public class Main {
 		// TODO Auto-generated method stub
 		try {
 			HistoriqueCoursAction sy = new HistoriqueCoursAction("AAPL",new GregorianCalendar(2015,04,10), new GregorianCalendar());
+			System.out.println("HistoriqueCoursAction OK");
 			sy.updateData();
+			System.out.println("HistoriqueCoursAction.updateData() OK");
 			JFrame fen = new JFrame("Cours de AAPL");
 			fen.setSize(600, 400);
 			Graphe g = new Graphe(sy);

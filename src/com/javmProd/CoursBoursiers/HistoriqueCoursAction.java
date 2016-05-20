@@ -45,17 +45,19 @@ public class HistoriqueCoursAction implements Iterable<Value>{
 
         Unmarshaller unmarshaller = jc.createUnmarshaller();
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-	    String link = "http://query.yahooapis.com/v1/public/yql?" +
-	    		"q=select%20Date,Open,High,Low,Close,Volume%20" +
+	    String link = "https://query.yahooapis.com/v1/public/yql?" +
+	    		"q=select%20*%20" +
 	    		"from%20yahoo.finance.historicaldata%20" +
 	    		"where%20symbol='"+this.symbol+"'%20" +
 	    				"and%20startDate='"+format1.format(this.startDate.getTime()).toString()+"'%20" +
 	    				"and%20endDate='"+format1.format(this.endDate.getTime()).toString()+"'" +
-	    		"&env=store://datatables.org/alltableswithkeys";
+	    		"&diagnostics=true&env=store://datatables.org/alltableswithkeys";
 	    System.out.println(link);
 	    URL url = new URL(link);
+	    System.out.println("URL created");
 	    InputStream xmlStream = url.openStream();
-        HistoriqueCoursAction stock = (HistoriqueCoursAction) unmarshaller.unmarshal(xmlStream);
+	    System.out.println("InputStream created");
+	    HistoriqueCoursAction stock = (HistoriqueCoursAction) unmarshaller.unmarshal(xmlStream);
         
         this.Values = stock.Values;
         Collections.sort(this.Values,new CompareValues(CompareValues.ByX));
