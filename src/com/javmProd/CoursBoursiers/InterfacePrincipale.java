@@ -1,31 +1,43 @@
 package com.javmProd.CoursBoursiers;
 
+import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 public class InterfacePrincipale extends Container implements Appellant{
 	InterfacePrincipale(){
 		super();
+		super.setLayout(new BorderLayout());
+		
 		JFrame fen = new JFrame("Cours Boursiers");
-		fen.setContentPane(this);
+		
 		JMenuBar menu = new JMenuBar();
-		this.add(menu);
+		menu.getSize().height = 15;
 		
-		JMenuItem fichiers = new JMenuItem("Fichiers");
-		menu.add(fichiers);
+		JMenu fichiers = new JMenu("Fichiers");
+		fichiers.setText("Fichiers");
+
 		
-		ButtonL buttonlistener = new ButtonL(this);
+		MenuListener buttonlistener = new MenuListener(this);
 		
-		JButton reglages = new JButton("Réglages");
-		fichiers.add(reglages);
+		JMenuItem reglages = new JMenuItem("Réglages");
 		reglages.setName("Reglages");
 		reglages.addActionListener(buttonlistener);
+		fichiers.add(reglages);
 		
-		fen.repaint();
+		menu.add(fichiers);
+		
+		fen.setMinimumSize(new Dimension(200,100));
+		
+		fen.setJMenuBar(menu);
+		fen.setContentPane(this);
+		
 		fen.setVisible(true);
 	}
 

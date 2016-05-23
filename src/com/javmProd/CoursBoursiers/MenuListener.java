@@ -4,9 +4,9 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ButtonL implements ActionListener {
+public class MenuListener implements ActionListener {
 	Appellant a;
-	ButtonL(Appellant a){
+	MenuListener(Appellant a){
 		this.a = a;
 	}
 	@Override

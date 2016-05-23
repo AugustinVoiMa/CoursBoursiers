@@ -13,6 +13,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		/*
 		try {
 			HistoriqueCoursAction sy = new HistoriqueCoursAction("AAPL",new GregorianCalendar(2015,04,10), new GregorianCalendar());
 			System.out.println("HistoriqueCoursAction OK");
@@ -28,6 +29,9 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
+		
+		InterfacePrincipale app = new InterfacePrincipale();
 	}
 
 }
