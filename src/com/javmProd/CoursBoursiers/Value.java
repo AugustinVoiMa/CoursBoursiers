@@ -61,8 +61,8 @@ public class Value {
     public String toString(){
     	return this.open+"->"+this.close+"|++="+this.high+",--="+this.low+"|V="+this.volume;
     }
-	public boolean between(Date xmin, Date xmax) {
-		return this.date.getTime() >= xmin.getTime() && this.date.getTime()<=xmax.getTime(); 
+	public boolean between(Double xmin, Double xmax) {
+		return this.date.getTime() >= xmin && this.date.getTime()<=xmax; 
 	}
 	public boolean plusPetitMin(Value v2){
 		return this.getLow() < v2.getLow();

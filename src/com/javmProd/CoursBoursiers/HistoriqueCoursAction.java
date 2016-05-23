@@ -2,14 +2,21 @@ package com.javmProd.CoursBoursiers;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.Authenticator;
+import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+import java.net.PasswordAuthentication;
+import java.net.Proxy;
 import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
+import java.util.Properties;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -54,12 +61,32 @@ public class HistoriqueCoursAction implements Iterable<Value>{
 	    				"and%20endDate='"+format1.format(this.endDate.getTime()).toString()+"'" +
 	    		"&diagnostics=true&env=store://datatables.org/alltableswithkeys";
 	    System.out.println(link);
+	   
+	    Proxy p;
+	    //p=Proxy.NO_PROXY;
+	    p = new Proxy(Proxy.Type.HTTP,new InetSocketAddress("194.167.30.76",3128));
+	    
+	    // http://wwwcache.univ-orleans.fr:3128/
+	    Authenticator.setDefault(new Authenticator() {
+ 
+	        public PasswordAuthentication getPasswordAuthentication() {
+	            return (new PasswordAuthentication("o2150534",
+	                    "094ACB8d".toCharArray()));
+	        }
+	    });
+	    
 	    URL url = new URL(link);
 	    System.out.println("URL created");
-	    InputStream xmlStream = url.openStream();
+	    HttpURLConnection conn = (HttpURLConnection) url.openConnection(p);
+	    System.out.println("Connection created");
+	    System.out.println("Proxy? " + conn.usingProxy());
+	    conn.connect();
+	    System.out.println("Connection established");
+	    InputStream xmlStream = conn.getInputStream();
 	    System.out.println("InputStream created");
 	    HistoriqueCoursAction stock = (HistoriqueCoursAction) unmarshaller.unmarshal(xmlStream);
-        
+        xmlStream.close();
+        conn.disconnect();
         this.Values = stock.Values;
         Collections.sort(this.Values,new CompareValues(CompareValues.ByX));
         Marshaller marshaller = jc.createMarshaller();
@@ -101,7 +128,7 @@ public class HistoriqueCoursAction implements Iterable<Value>{
 		}
 		return min.getLow();
 	}
-	public Double getSeqMax(Date xmin, Date xmax) {
+	public Double getSeqMax(Double xmin, Double xmax) {
 		Value max = null;
 		for(Value v : this.Values){
 			if (max==null || (v.between(xmin,xmax) && v.plusPetitMin(max))){
