@@ -37,7 +37,7 @@ public class InterfacePrincipale extends Container implements Appellant{
 		
 		fen.setJMenuBar(menu);
 		fen.setContentPane(this);
-		
+		fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		fen.setVisible(true);
 	}
 

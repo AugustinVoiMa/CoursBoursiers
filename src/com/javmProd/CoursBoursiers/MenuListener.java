@@ -12,7 +12,7 @@ public class MenuListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		String name = ((Component)arg0.getSource()).getName();
-		if(name.equals("reglages")){
+		if(name.equals("Reglages")){
 			this.a.launchView(new Props());
 		}
 	}

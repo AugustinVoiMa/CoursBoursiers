@@ -9,14 +9,11 @@ import java.net.PasswordAuthentication;
 import java.net.Proxy;
 import java.net.SocketTimeoutException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
-import java.util.Properties;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
