@@ -15,10 +15,12 @@ public class MouseListGraph extends MouseAdapter {
     private final Cursor hndCursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
     private final Point pp = new Point();
     private JPanel feuille;
+    private GraphBounds gbounds;
 
-    public MouseListGraph(JPanel feuille)
+    public MouseListGraph(Graphe gr)
     {
-        this.feuille = feuille;
+        this.feuille = gr.getFeuille();
+        this.gbounds = gr.getGBounds();
     }
 
     public void mouseDragged(final MouseEvent e)
@@ -39,6 +41,7 @@ public class MouseListGraph extends MouseAdapter {
 
     public void mouseReleased(MouseEvent e)
     {
+    	//gbounds.autoZoom();
         feuille.setCursor(defCursor);
         feuille.repaint();
     }

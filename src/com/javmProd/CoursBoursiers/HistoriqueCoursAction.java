@@ -7,6 +7,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 
@@ -90,5 +91,23 @@ public class HistoriqueCoursAction implements Iterable<Value>{
 	}
 	public Integer size(){
 		return this.Values.size();
+	}
+	public Double getSeqMin(Double xmin, Double xmax) {
+		Value min = null;
+		for(Value v : this.Values){
+			if (min==null || (v.between(xmin,xmax) && v.plusPetitMin(min))){
+				min=v;
+			}
+		}
+		return min.getLow();
+	}
+	public Double getSeqMax(Date xmin, Date xmax) {
+		Value max = null;
+		for(Value v : this.Values){
+			if (max==null || (v.between(xmin,xmax) && v.plusPetitMin(max))){
+				max=v;
+			}
+		}
+		return max.getLow();
 	}
 }

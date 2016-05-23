@@ -21,7 +21,12 @@ public class Graphe extends JScrollPane {
 	private JPanel panelGraph;
 	private JScrollPane panelGeneral;
 	private GraphBounds gbounds;
-
+	public JPanel getFeuille(){
+		return this.feuille;
+	}
+	public GraphBounds getGBounds(){
+		return this.gbounds;
+	}
 	public Graphe(HistoriqueCoursAction symbol){		
 		super();
 		feuille = new JPanel(null);
@@ -37,7 +42,7 @@ public class Graphe extends JScrollPane {
 		panelGeneral.setViewportBorder(new LineBorder(Color.BLACK));
 		
 		panelGeneral.setHorizontalScrollBar(panelGeneral.createHorizontalScrollBar());
-		panelGeneral.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		panelGeneral.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		panelGeneral.getHorizontalScrollBar().setMinimum(0);
 		panelGeneral.getHorizontalScrollBar().setMaximum(feuille.getWidth());
@@ -45,13 +50,13 @@ public class Graphe extends JScrollPane {
 		
 		
 		panelGeneral.setVerticalScrollBar(panelGeneral.createVerticalScrollBar());
-		panelGeneral.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		panelGeneral.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
 		
 		panelGeneral.setBackground(Color.black);
 		
 		
-		gbounds = new GraphBounds(symbol,panelGraph);
-		MouseListGraph mml = new MouseListGraph(feuille);
+		gbounds = new GraphBounds(symbol,this);
+		MouseListGraph mml = new MouseListGraph(this);
 		panelGeneral.getViewport().addMouseMotionListener(mml);
 		panelGeneral.getViewport().addMouseListener(mml);
 		Chandelle ch = null;

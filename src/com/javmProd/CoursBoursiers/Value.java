@@ -61,4 +61,13 @@ public class Value {
     public String toString(){
     	return this.open+"->"+this.close+"|++="+this.high+",--="+this.low+"|V="+this.volume;
     }
+	public boolean between(Date xmin, Date xmax) {
+		return this.date.getTime() >= xmin.getTime() && this.date.getTime()<=xmax.getTime(); 
+	}
+	public boolean plusPetitMin(Value v2){
+		return this.getLow() < v2.getLow();
+	}
+	public boolean plusGrandMax(Value v2){
+		return this.getHigh() > v2.getHigh();
+	}
 }

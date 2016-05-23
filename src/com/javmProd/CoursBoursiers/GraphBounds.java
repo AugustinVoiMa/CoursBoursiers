@@ -1,6 +1,8 @@
 package com.javmProd.CoursBoursiers;
 
 import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.util.Date;
 
 import javax.swing.JPanel;
@@ -11,9 +13,14 @@ public class GraphBounds {
 	private Double width,height;
 	private Double candelWidth, candelHeight;
 	private Integer nbCandels;
+	private HistoriqueCoursAction h;
 	public final static Integer EXTREMUMS__GWIDTH = 2;
+	Graphe gr;
 	
-	public GraphBounds(HistoriqueCoursAction cours,JPanel feuille){
+	public GraphBounds(HistoriqueCoursAction cours,Graphe gr){
+		this.h = cours;
+		this.gr=gr;
+		
 		this.candelHeight = 6.;
 		this.candelWidth = 6.;		
 		
@@ -36,8 +43,17 @@ public class GraphBounds {
 		this.nbCandels=(int)(cours.size()+2);
 		
 		
-		feuille.setPreferredSize(new Dimension((int)(this.nbCandels*this.candelWidth*2),(int)(this.height*this.candelHeight)));
+		gr.getFeuille().setPreferredSize(new Dimension((int)(this.nbCandels*this.candelWidth*2),(int)(this.height*this.candelHeight)));
 	}
+	
+	/*
+	 * 	FenHeight = Height*CandelHeight
+	 * 			CandelHeight = FenHeight/Height
+	 * 
+	 * 	FenWidth = nbCandels * candelWidth * 2;
+	 * 			candelWidth = FenWidth/(nbCandels*2)
+	 */
+	
 	
 	public double getCandelWidth(){
 		return this.candelWidth;
@@ -57,60 +73,32 @@ public class GraphBounds {
 		return res;
 	}
 	
+	
 	/*
-	 * à venir...
 	 * 
-	public void autoZoomY(){
-		
-	}
-	public Double getZoomX(){
-		return this.candelWidth;
-	}
-	public Double getZoomY(){
-		return this.candelHeight;
-	}
-	public void setZoomX(Double zoom){
-		this.candelWidth = zoom;
-	}
-	public void setZoomY(Double zoom){
-		this.candelHeight = zoom;
-	}
-	public void incZoom(Date cursor){
-		try {
-			this.incZoom(1.);
-		} catch (InvalidZoomException e) {
-			e.printStackTrace();
-		}
-	}
-	public void incZoom(Double i) throws InvalidZoomException{
-		this.candelWidth += i;
-		if (this.candelWidth <= 0){
-			this.candelWidth -= i;
-			throw new InvalidZoomException();
-		}
-		this.autoZoomY();
-	}
+	 * 	Utiliser Valeur.isVisible() pour obtenir les dimensions des chandelles visibles dans le viewport?????
+	 * 
+	 */
 	
-	*/
-	
-	
-	/*
-	 * Inutile...
-	 
-	public double calcX(Date d) throws OutOfGraphException{
-		//Renvoie la coordonnée en X de la chandelle
-		Double res = (double) ((d.getTime()-xmind)/this.width)*this.candelWidth;
-		
-		//System.out.println("d.getTime() = "+d.getTime()+"\n(d.getTime()-xmind) = "+(d.getTime()-xmind)+"\nthis.candelWidth = "+this.candelWidth + "\ncalcX = "+res);
+	/*public void autoZoom(){
+		Dimension dVisible = gr.getViewport().getExtentSize();
+		double max = this.h.getSeqMax(this.getfeuilleXmin(),this.getfeuilleXmax());
+		double min= this.h.getSeqMin(this.getfeuilleXmin(),this.getfeuilleXmax());
+		double height = (max-min);
+		this.candelHeight = dVisible.getHeight()/height;
+	}
 
-		if (res < 0.-(this.candelWidth/2.) || res > this.width*this.candelWidth)
-			throw new OutOfGraphException("x: "+d.getTime()+" is not in [ "+xmind+" ; "+xmaxd+" ]");
-		
-		return res;		
+	private Double getfeuilleXmax() {
+		Rectangle dVisible = gr.getViewport().getViewRect();
+		double xmax = dVisible.getMaxX();
+		return xmax;
 	}
-	
-	*/
-	
+
+	private Double getfeuilleXmin() {
+		Rectangle dVisible = gr.getViewport().getViewRect();
+		double xmax = dVisible.getMaxX();
+		return null;
+	}*/
 	
 	
 }
