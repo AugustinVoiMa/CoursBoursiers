@@ -4,10 +4,12 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.AbstractButton;
 
-public class OptListener implements ActionListener {
+public class OptListener implements ActionListener, ItemListener {
 	Props p;
 	
 	OptListener(Props p){
@@ -25,6 +27,13 @@ public class OptListener implements ActionListener {
 		
 		// Components
 		
+		
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent arg0) {
+		String name = ((Component)arg0.getSource()).getName();
+
 		if(name.equals("useProxy")){
 			this.p.setAllEnabledFor(((Container)arg0.getSource()),((AbstractButton)arg0.getSource()).isSelected());
 		}

@@ -19,7 +19,7 @@ import javax.swing.border.TitledBorder;
 
 public class Props extends Container implements Vue {
 	public JFrame fen;
-	private JPanel currInterface;
+	private JPanelCustom currInterface;
 	private JPanel optionsPane;
 	private JScrollPane scrollMenuPane;
 	private JScrollPane scrollOptionsPane;
@@ -38,7 +38,7 @@ public class Props extends Container implements Vue {
 		
 		opt = new OptListener(this);
 		
-		currInterface = new JPanel();
+		currInterface = new ReseauInterface(opt);
 		currInterface.setBackground(Color.WHITE);
 		
 		
@@ -79,31 +79,11 @@ public class Props extends Container implements Vue {
 		this.currInterface.add(reseau);
 	}
 	public void showReseauInterface(){
-		this.currInterface.removeAll();
-		JCheckBox useProxy = new JCheckBox("Utiliser un Proxy");
-		useProxy.setName("useProxy");
-		useProxy.setBorder(new TitledBorder("Paramètres Proxy"));
-		useProxy.setSelected(false);
-		useProxy.setLayout(new BoxLayout(useProxy,BoxLayout.Y_AXIS));
-		
-		JPanel j = new JPanel(new FlowLayout());
-		JLabel jl = new JLabel("serveur proxy : ");
-		jl.setEnabled(false);
-		JTextField jtxt = new JTextField(25);
-		jtxt.setEnabled(false);
-		j.add(jl);
-		j.add(jtxt);
-		
-		useProxy.add(j);
-		
-		this.currInterface.add(useProxy);
-		
+		this.currInterface = new ReseauInterface(this.opt);		
 		this.fen.setVisible(true);
 	}
 	public void setAllEnabledFor(Container component,Boolean is_enabled) {
-		for (Component c : component.getComponents()){
-			c.setEnabled(is_enabled);
-		}
+		this.currInterface.setAllEnabledFor(component, is_enabled);
 		
 	}
 }
