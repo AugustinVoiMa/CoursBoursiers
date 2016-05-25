@@ -14,9 +14,15 @@ import javax.swing.border.TitledBorder;
 
 public class ReseauInterface extends JPanelCustom{
 	HashMap<Component,ArrayList<Component>> hash;
+	JPanel mainPanel;
 	ReseauInterface(OptListener opt){
+		super();
+		mainPanel = new JPanel();
+		
+		super.setViewportView(mainPanel);
+		
 		this.hash = new HashMap<Component,ArrayList<Component>>();
-		this.setLayout(new FlowLayout());
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		JPanel proxyParam = new JPanel();
 		proxyParam.setBorder(new TitledBorder("Paramètres Proxy"));
@@ -40,10 +46,21 @@ public class ReseauInterface extends JPanelCustom{
 		j.add(jl);
 		j.add(jtxt);
 		
-		this.hash.get(useProxy).add(jl);
-		this.hash.get(useProxy).add(jtxt);
+		JPanel j2 = new JPanel(new FlowLayout());
+		
+		JLabel jl2 = new JLabel("port proxy : ");
+		
+		JTextField jtxt2 = new JTextField(4);
+		jtxt2.setEnabled(false);
+		
+		j2.add(jl2);
+		j2.add(jtxt2);
+		
+		this.hash.get(useProxy).add(jl2);
+		this.hash.get(useProxy).add(jtxt2);
 		
 		proxyParam.add(j);
+		proxyParam.add(j2);
 		
 		super.add(proxyParam);
 		

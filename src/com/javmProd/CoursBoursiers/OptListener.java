@@ -20,9 +20,8 @@ public class OptListener implements ActionListener, ItemListener {
 	public void actionPerformed(ActionEvent arg0) {
 		// Menu
 		String name = ((Component)arg0.getSource()).getName();
-		System.out.println(name);
 		if(name.equals("reseauOPT")){
-			this.p.showReseauInterface();
+			this.p.show(Props.RESEAU_OPTIONS);
 		}
 		
 		// Components
