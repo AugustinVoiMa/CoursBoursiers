@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.Authenticator;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.PasswordAuthentication;
 import java.net.Proxy;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
+import java.util.prefs.Preferences;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -59,18 +61,22 @@ public class HistoriqueCoursAction implements Iterable<Value>{
 	    		"&diagnostics=true&env=store://datatables.org/alltableswithkeys";
 	    System.out.println(link);
 	   
-	    Proxy p;
+	    Proxy p = Proxy.NO_PROXY;
 	    //p=Proxy.NO_PROXY;
-	    p = new Proxy(Proxy.Type.HTTP,new InetSocketAddress("194.167.30.76",3128));
-	    
+	    Preferences prefs = Preferences.userNodeForPackage(com.javmProd.CoursBoursiers.Props.class);
+	    if(prefs.get("useProxy","false").equals("true")){
+	    	String ip = InetAddress.getByName(prefs.get("proxyServer", "")).getHostAddress();
+	    	int port = Integer.parseInt(prefs.get("proxyServerPort", "1111"));
+	    	p = new Proxy(Proxy.Type.HTTP,new InetSocketAddress(ip,3128));
+	    }
 	    // http://wwwcache.univ-orleans.fr:3128/
-	    Authenticator.setDefault(new Authenticator() {
+	    /*Authenticator.setDefault(new Authenticator() {
  
 	        public PasswordAuthentication getPasswordAuthentication() {
 	            return (new PasswordAuthentication("o2150534",
 	                    "094ACB8d".toCharArray()));
 	        }
-	    });
+	    });*/
 	    
 	    URL url = new URL(link);
 	    System.out.println("URL created");

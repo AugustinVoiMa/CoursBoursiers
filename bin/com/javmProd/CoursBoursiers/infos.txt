@@ -1,0 +1,4 @@
+Propriétés:
+	"useProxy": "true"|"false" -> si un proxy est utilisé pour la connexion
+	"proxyServer" : "proxy.server.com" -> l'addresse du serveur proxy
+	"proxyServerPort": "1111" -> le port du proxy

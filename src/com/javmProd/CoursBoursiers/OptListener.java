@@ -23,6 +23,9 @@ public class OptListener implements ActionListener, ItemListener {
 		if(name.equals("reseauOPT")){
 			this.p.show(Props.RESEAU_OPTIONS);
 		}
+		else if(name.equals("savePreferences")){
+			this.p.save();
+		}
 		
 		// Components
 		

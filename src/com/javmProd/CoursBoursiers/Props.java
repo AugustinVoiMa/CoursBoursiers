@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.util.prefs.Preferences;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -28,27 +29,33 @@ public class Props extends Container implements Vue {
 	private JSplitPane splitPane;
 	private OptListener opt;
 	private JPanelCustom visiblePane ;
+	private Preferences prefs;
 	
 	public static String RESEAU_OPTIONS = "reseau";
 	
 	Props(){
 		super();
+		prefs = Preferences.userNodeForPackage(com.javmProd.CoursBoursiers.Props.class);
+		opt = new OptListener(this);
+
 		
 	}
 	public void switchInterface(JPanel interf){
 		
 	}
 	public void show(){	
+		fen = new JFrame("Réglages");
+		fen.setSize(new Dimension(700,300));
+		fen.setContentPane(this);
 		
-		Dimension d = new Dimension(500,300);
+		Dimension innerd = new Dimension(fen.getSize().width-10,fen.getSize().height-10);
 		
-		opt = new OptListener(this);
-		
+		Dimension vpd = new Dimension((int)(fen.getSize().getWidth()*0.8),(int)fen.getSize().getHeight());
 		
 		optionsPane = new JPanel(new CardLayout());
 		optionsPane.setBackground(Color.LIGHT_GRAY);
-		
-		visiblePane = new ReseauInterface(opt);
+		optionsPane.setSize(vpd);
+		visiblePane = new ReseauInterface(opt,innerd,prefs);
 		optionsPane.add(visiblePane, RESEAU_OPTIONS);
 		
 		menuPane = new JPanel();
@@ -63,7 +70,7 @@ public class Props extends Container implements Vue {
 		scrollMenuPane.setBorder(new EmptyBorder(15,15,15,15));
 		
 		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-		splitPane.setSize(d);
+		splitPane.setSize(innerd);
 		splitPane.setDividerSize(2);
 		splitPane.setRightComponent(optionsPane);
 		splitPane.setLeftComponent(scrollMenuPane);
@@ -75,10 +82,8 @@ public class Props extends Container implements Vue {
 		
 		this.show(this.RESEAU_OPTIONS);
 		
-		fen = new JFrame("Réglages");
-		fen.setSize(d);
-		fen.setContentPane(this);
 		fen.setVisible(true);
+		
 	}
 	
 	
@@ -98,5 +103,9 @@ public class Props extends Container implements Vue {
 	public void show(String interfaceToShow){
 		((CardLayout)optionsPane.getLayout()).show(optionsPane,interfaceToShow);
 
+	}
+	public void save() {
+		// TODO Auto-generated method stub
+		this.visiblePane.save();
 	}
 }
