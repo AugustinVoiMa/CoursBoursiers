@@ -17,6 +17,7 @@ public class InterfacePrincipale extends Container implements Appellant{
 	InterfacePrincipale(){
 		super();
 		super.setLayout(new BorderLayout());
+		Splash sp = new Splash();
 		
 		JFrame fen = new JFrame("Cours Boursiers");
 		
@@ -49,7 +50,9 @@ public class InterfacePrincipale extends Container implements Appellant{
 		fen.setJMenuBar(menu);
 		fen.setContentPane(this);
 		fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		sp.dispose();
 		fen.setVisible(true);
+		
 	}
 
 	@Override
@@ -75,5 +78,9 @@ public class InterfacePrincipale extends Container implements Appellant{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void updateValeursListe(){
+		
 	}
 }

@@ -12,8 +12,7 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Splash S = new Splash(); 
-		//InterfacePrincipale app = new InterfacePrincipale();
+		InterfacePrincipale app = new InterfacePrincipale();
 	}
 
 }
